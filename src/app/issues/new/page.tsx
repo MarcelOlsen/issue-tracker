@@ -11,6 +11,7 @@ import { useState } from "react";
 import { createIssueSchema } from "@/validationSchemas/createIssueSchema";
 import { z } from "zod";
 import ErrorMessage from "@components/ErrorMessage";
+import Spinner from "@components/Spinner";
 
 type NewIssueForm = z.infer<typeof createIssueSchema>;
 
@@ -25,6 +26,7 @@ const NewIssuePage = () => {
     resolver: zodResolver(createIssueSchema),
   });
   const [error, setError] = useState<string>("");
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   return (
     <div className="max-w-xl">
@@ -37,9 +39,11 @@ const NewIssuePage = () => {
         className="space-y-4"
         onSubmit={handleSubmit(async (data) => {
           try {
+            setIsSubmitting(true);
             await axios.post("/api/issues", data);
             router.push("/issues");
           } catch (error: any) {
+            setIsSubmitting(false);
             return setError("An unexpected error occurred.");
           }
         })}
@@ -64,7 +68,9 @@ const NewIssuePage = () => {
             {errors.description.message}
           </Text>
         )}
-        <Button>Submit New Issue</Button>
+        <Button disabled={isSubmitting}>
+          Submit New Issue {isSubmitting && <Spinner />}
+        </Button>
       </form>
     </div>
   );
