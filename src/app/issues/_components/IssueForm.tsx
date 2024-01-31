@@ -1,6 +1,6 @@
 "use client";
 
-import { createIssueSchema } from "@/validationSchemas/createIssueSchema";
+import { createIssueSchema } from "@/validationSchemas/issueSchema";
 import { ErrorMessage, Spinner } from "@components";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Issue } from "@prisma/client";

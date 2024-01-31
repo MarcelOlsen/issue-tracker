@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { z } from "zod"
 import prisma from "@/prisma/client"
-import { createIssueSchema } from "@/validationSchemas/createIssueSchema"
+import { createIssueSchema } from "@/validationSchemas/issueSchema"
 
 
 export const POST = async (request: NextRequest) => {
