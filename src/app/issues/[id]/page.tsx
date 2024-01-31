@@ -3,6 +3,7 @@ import prisma from "@/prisma/client";
 import { notFound } from "next/navigation";
 import { Card, Heading } from "@radix-ui/themes";
 import IssueStatusBadge from "../../components/IssueStatusBadge";
+import Markdown from "react-markdown";
 
 const IssueDetailsPage = async ({ params }: { params: { id: string } }) => {
   const issue = await prisma.issue.findUnique({
@@ -22,7 +23,9 @@ const IssueDetailsPage = async ({ params }: { params: { id: string } }) => {
         <IssueStatusBadge status={issue.status} />
         <p>{issue.createdAt.toDateString()}</p>
       </div>
-      <Card>{issue.description}</Card>
+      <Card className="prose mt-4">
+        <Markdown>{issue.description}</Markdown>
+      </Card>
     </div>
   );
 };
